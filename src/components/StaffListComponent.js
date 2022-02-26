@@ -11,6 +11,10 @@ import { BrowserRouter, Routes } from "react-router-dom";
 // import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { Outlet, Link } from "react-router-dom";
+import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux';
+import { loadStaff } from '../redux/ActionCreators';
+import { baseUrl } from '../shared/baseUrl';
 
 // import logo from './logo.svg';
 // import './App.css';
@@ -27,6 +31,31 @@ import {DEPARTMENTS} from '../shared/staffs';
 // import {STAFFS} from './shared/staffs.js';
 // import { LEADERS } from './shared/leaders';
 
+const mapStateToProps = state => {
+    return {
+      staffs: state.staffs,
+    }
+}
+
+const mapDispatchToProps = dispatch => ({
+    loadStaff: (staffName) => dispatch(loadStaff(staffName))
+});
+
+// fetch(baseUrl + 'staffs')
+// .then(response => response.json())
+// .then((json) => {
+//     console.log(json[0]);
+//     this.setState({
+//         // staffs: json
+//         items: json
+//     })
+//     // console.log(items);
+//     // console.log(this.state.staff);
+// })
+// // .then(response => console.log(response.json()))
+// .then(console.log("abcd"));
+// .then(console.log(response));
+
 class StaffList extends Component {
 
     constructor(props) {
@@ -34,8 +63,29 @@ class StaffList extends Component {
 
         this.state = {
             staffs : null,
+            items: [],
+            DataisLoaded: true
             // staffs : STAFFS
         };
+    }
+
+    componentDidMount(){
+    fetch(baseUrl + 'staffs')
+.then(response => response.json())
+.then((json) => {
+    console.log("abc");
+    console.log(json);
+    console.log(json[0]);
+    this.setState({
+        // staffs: json
+        items: json
+    })
+    // console.log(items);
+    // console.log(this.state.staff);
+})
+.then(
+    console.log("abcde")
+)
     }
 
     onStaffClick(staff) {
@@ -142,6 +192,24 @@ class StaffList extends Component {
             // console.log(this.props);
             // console.log("abc");
             // console.log(this.state.staffs);
+            // this.props.staffs.name
+            // console.log(staffs);
+            // {this.state.items.map((item) => {item[0].name})}
+            const { DataisLoaded, items } = this.state;
+            if (!DataisLoaded) return <div>
+            <h1> Pleses wait some time.... </h1> </div> ;
+            // return 
+                // <h1>abc</h1>;
+                    // {
+                    //     items.map((item) => ( 
+                    //     <ol key = { item.id } >
+                    //         User_Name: { item.username }, 
+                    //         Full_Name: { item.name }, 
+                    //         User_Email: { item.email } 
+                    //         </ol>
+                    //     ))
+                    // }
+            // const staffsList = items
             const staffList = this.props.staffs.map((staff) => {
                 return (
                     // add css to arrange the text
@@ -156,7 +224,12 @@ class StaffList extends Component {
                         <CardText>{item.description}</CardText>
                         </CardBody> */}
                         </Card>
+                        {/* <li>{baseUrl + staff.name}</li> */}
                         <li>{staff.name}</li>
+                        {/* <li>{this.props.loadStaff.staffName}</li> */}
+                        {/* <p>{this.props.staffs.name}</p> */}
+                        {/* <p>{this.props.loadStaff.staffName}</p> */}
+                        {/* <p>abcdef</p> */}
                         {/* <li>{staff.image}</li> */}
                         {/* <p>Phòng Ban</p> */}
                     </div>
@@ -166,6 +239,16 @@ class StaffList extends Component {
             return (
                 // const element = {this.state.staffs[0].name};
                 <div className = "container">
+                    {/* <h1> Fetch data from an api in react </h1>
+                    {
+                items.map((item) => ( 
+                <ol key = { item.id } >
+                    User_Name: { item.username }, 
+                    Full_Name: { item.name }, 
+                    User_Email: { item.email } 
+                    </ol>
+                ))
+                    } */}
                     <div>
                         <Header />
                     </div>
@@ -185,8 +268,23 @@ class StaffList extends Component {
                             </ul>
 
                             <hr />
-                            <div class = "row">
+                            {/* Render StaffList from data source file */}
+                            {/* <div class = "row">
                                 {staffList}
+                            </div> */}
+                            {/* Render StaffList from fetch an API */}
+                            <div class="row">
+                                {
+                                    items.map((item) => ( 
+                                        <><div>
+                                            <Card onClick={() => this.onStaffClick(item)}>
+                                                <CardImg src={item.image} alt={item.image} />
+                                            </Card>
+                                        </div>
+                                            {/* <li>{ item.name }</li> */}
+                                            <ol>{item.name}</ol></>
+                                    ))
+                                }
                             </div>
                             <Route exact path='/staffdetail' component={() => <StaffDetail staff={this.state.name} />} />
                             <Route exact path='/staffdetail' component={() => <StaffDetail staff={this.state.doB} />} />
@@ -233,6 +331,7 @@ class StaffList extends Component {
                         {/* <StaffDetail staff={this.state.overTime} /> */}
 
                         {/* {this.renderstaff(this.state.staffs)} */}
+                        {/* {this.renderstaff(this.props.staffs.name)} */}
                         {/* {this.state.name} */}
                         {/* {this.state.staffs[0].name} */}
                         {/* <StaffDetail staff="Ford" /> */}
@@ -895,3 +994,4 @@ class StaffList extends Component {
 }
 
 export default StaffList;
+// export default withRouter(connect(mapStateToProps, mapDispatchToProps)(StaffList));

@@ -1,0 +1,1 @@
+export const LOAD_STAFF = 'LOAD_STAFF';

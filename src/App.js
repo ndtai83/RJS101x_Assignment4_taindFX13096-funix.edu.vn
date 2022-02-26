@@ -15,6 +15,8 @@ import { Component } from 'react/cjs/react.production.min';
 import { LEADERS } from './shared/leaders';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Link } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { ConfigureStore } from './redux/configureStore';
 class App extends Component {
 
 // function App(props) {
@@ -29,7 +31,9 @@ class App extends Component {
     };
   }
   render () {
+  const store = ConfigureStore();
   return (
+    <Provider store={store}>
     <div>
       <div>
         <h1>Ứng dụng quản lý nhân sự v1.0</h1>
@@ -66,6 +70,7 @@ class App extends Component {
       {/* <Staff staffs={this.state.staffs}/> */}
       {/* <StaffList staffs={this.state.staffs}/> */}
     </div>
+    </Provider>
   );
   }
 }
