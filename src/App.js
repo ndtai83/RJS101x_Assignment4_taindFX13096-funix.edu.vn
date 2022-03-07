@@ -1,23 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
-
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Header from "./components/header/Header";
+import Footer from "./components/footer/Footer";
+import UserGetData from "./components/content/UserContent/UserGetData";
+import AboutUser from "./components/content/UserContent/AboutUser";
+import User from "./components/content/UserContent/User";
+import Department from "./components/content/Department/Department";
+import Payroll from "./components/payroll/Payroll";
+import SearchUser from "./components/searchUser/SearchUser";
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <BrowserRouter>
+        {/* header */}
+        <Header />
+        {/* router */}
+        <Routes>
+          <Route path="/" element={<UserGetData />}></Route>
+          <Route path="/staffs/:id" element={<AboutUser />}></Route>
+          <Route path="/menu" element={<Department />}></Route>
+          <Route path="/payroll" element={<Payroll/>}></Route>
+          <Route path="/staffs/search" element={<SearchUser/>}></Route>
+        </Routes>
+        {/* footer */}
+        <Footer />
+      </BrowserRouter>
     </div>
   );
 }
