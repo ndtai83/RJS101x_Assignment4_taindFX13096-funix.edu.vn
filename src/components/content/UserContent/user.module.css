@@ -37,10 +37,26 @@
   padding: 100px 20px;
   height: 700px;
 }
+.userDepartmentContainer {
+  width: 80%;
+  margin: 0 auto;
+  display: grid;
+  /* align-items: center; */
+  grid-template-columns: repeat(4, auto);
+  padding-top: 100px;
+}
+.aboutUserDepartment { 
+  height: auto;
+  padding: 0;
+}
 
 .userContainer {
   margin-top: 25px;
   display: flex;
+}
+.aboutUserDepartmentContainer {
+  display:block;
+  text-align: center;
 }
 .userImage {
   width: 250px;
@@ -182,6 +198,22 @@
 .linkAboutUserSearch {
   position: relative;
   margin: 30px 15px;
+}
+.deleteUser {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  color:#fff;
+  cursor: pointer;
+  z-index: 99;
+}
+.editUser {
+  position: absolute;
+  right: 40px;
+  top: 15px;
+  color:#fff;
+  cursor: pointer;
+  z-index: 99;
 }
 /* responsive tablet big */
 @media (min-width: 1024px) and (max-width: 1365px) {
